@@ -1,0 +1,17 @@
+<script>
+  function switchTab(cardId,element) {
+    document.querySelectorAll('.content-section').forEach(card=>{
+      card.classList.remove('active');
+    });
+    const targetCard=document.getElementById(cardId);
+    if(targetCard) {
+      targetCard.classList.add('active');
+    document.querySelectorAll('.menu-item')forEach(item=>{
+      item.classList.remove('active');
+    });
+    if(element) {
+      element.classList.add('active');
+    }
+  }
+
+</script>

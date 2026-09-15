@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="desktop.css">
+    <link rel="stylesheet" href="mobile.css">
+    <style>
+      .view-section {display: block;}
+      #view-desktop {display: none;}
+      #view-mobile {display: none;}
+/*========================================*/
+/* login-effects
+/*========================================*/
+      @keyframes slideDown {
+        from {transform: translateY(-300px); opacity: 0;}
+        to {transform: translateY(0); opacity: 1;}
+      }
+      @keyframes slideUp {
+        from {transform: translateY(300px); opacity: 0;}
+        to {transform: translateY(0); opacity: 1;}
+      }
+      @keyframes slideInLeft {
+        from {transform: translateX(-300px); opacity: 0;}
+        to {transform: translateX(0); opacity: 1;}
+      }
+      @keyframes slideInRight {
+        from {transform: translateX(300px); opacity: 0;}
+        to {transform: translateX(0); opacity: 1;}
+      }
+      @keyframes slideSwap {
+        0% {transform: translateX(0);}
+        40% {transform: translateX(-120%);}
+        41% {transform: translateX(120%);}
+        100%{transform: translateX(0);} 
+      }
+/*========================================*/
+/* CSS หน้าล็อกอิน
+/*========================================*/
+      
+/*==================== กันหน้าเว็บ overflow ====================*/
+      #view-login {
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+      }
+      .first-load .login-logo,
+      .first-load .version-title {
+        animation: slideDown 1s;
+      }
+      .first-load .version-buttons button:first-child {
+        animation: slideInLeft 1s;
+      }
+      .first-load .version-buttons button:last-child {
+        animation: slideInRight 1s;
+      }
+/*==================== login-container ====================*/      
+      .login-container {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+        justify-content: center;
+        align-items: flex-start;
+        background-color: #efefef;
+      }
+/*==================== login-card ====================*/
+      .login-card {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        min-width: 400px;
+        padding: 20px;
+        align-items: center;
+        background-color: #efefef;
+      }
+/*==================== login-logo-main ====================*/
+      .login-logo {
+       max-height: 310px;
+       max-width: 350px;
+       margin-top: 130px;
+       margin-bottom: 20px;
+       object-fit: contain;
+       transition: margin-top 0.4s ease-in-out, max-height 0.4s ease-in-out;
+      }
+/*==================== login-logo-mobile ====================*/
+      .login-logo.is-mobile {
+        max-height: 200px;
+        margin-top: 25px;
+        margin-bottom: 15px;
+      }
+/*==================== step-contanier ====================*/
+      .step-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 220px;
+        width: 100%;
+      }
+/*==================== version-title ====================*/
+      .version-title {
+        display: block;
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: 500;
+        color: #212121;
+      }
+/*==================== version-btn-container ====================*/
+      .version-buttons {
+        width: 250px;
+        display: flex;
+        gap: 15px;
+        margin-bottom: 10px;
+      }
+/*==================== version-btn ====================*/
+      .btn-version {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 10px;
+        border: 2px solid #ffffff;
+        border-radius: 12px;
+        background-color: #052659;
+        color: #ffffff;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+      }
+/*==================== version-btn-hover ====================*/
+      .btn-version:hover {
+        border: 2px solid #ffffff;
+        background-color: #052659;
+        color: #ffffff;
+        transform: translateY(-4px);
+        box-shadow: 0 8px 13px rgba(0, 0, 0, 0.25);
+      }
+/*==================== version-btn-press ====================*/
+      .btn-version:active {
+        background-color: #fca311;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+      }
+/*==================== input-submitbtn-container ====================*/
+      .login-section {
+        display: flex;
+        flex-direction: column;
+      }
+/*==================== pin-label-container ====================*/
+      .label-container {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+/*==================== login-label ====================*/
+      #pin-label {
+        display: inline-block;
+        font-size: 18px;
+        font-weight: 600;
+        white-space: nowrap;       
+      }
+/*==================== pin-label-animation ====================*/
+      #pin-label.animate-swap {
+        animation: slideSwap 0.3s ease-in-out !important;
+      }
+/*==================== pin-input ====================*/
+      .pin-input {
+        box-sizing: border-box;
+        width: 80%;
+        border-radius: 12px;
+        border: 1px solid #e0e0e0;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: 6px;
+        padding: 10px;
+        margin-bottom: 20px;
+        outline: none;
+      }
+/*==================== pin-input-focus ====================*/
+      .pin-input:focus {
+        border: 1px solid #052659
+      }
+/*==================== ms-reveal ====================*/
+      input[type="password"]::-ms-reveal {
+        display: none !important;
+      }
+/*==================== numpad-container ====================*/
+      .numpad-grid {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        display: grid;
+        min-height: 300px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        width: 80%;
+        margin-bottom: 20px;
+      }
+/*==================== numpad ====================*/
+      .btn-num {
+        display: flex;
+        padding: 14px;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        background-color: #f8f9fa;
+        color: #052659;
+        cursor: pointer;
+      }
+/*==================== numpad-press ====================*/
+      .btn-num:active {
+        background-color: #052659;
+        color: #ffffff;
+        transform: scale(0.92);
+      }
+/*==================== clear-delete ====================*/
+      .btn-num-action {
+        background-color: #e0e0e0;
+        color: #d32f2f;
+      }
+/*==================== login-button ====================*/
+      #login-submit {
+        box-sizing: border-box;
+        width: 70%;
+        border-radius: 12px;
+        border: 1px solid #efefef;
+        padding: 12px;
+        margin-bottom: 15px;
+        background-color: #052659;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        cursor: pointer;
+      }
+/*==================== ปุ่มกลับไปเลือกเวอร์ชัน ====================*/
+      .btn-back {
+        border: none;
+        background-color: #efefef;
+        font-size: 14px;
+        color: #212121;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body class="first-load" ontouchstart="">
+    <div id="v-ipad"></div>
+    <div id="h-ipad"></div>
+    <div id="view-login" class="view-section">
+      <div class="login-container">
+        <div class="login-card">
+          <img src="https://lh3.googleusercontent.com/d/1Dq_he7KUrR40SIzSeGqCGugqt0vCutEK" alt="LOGO"
+          class="login-logo">
+          <div id="step-version" class="step-container">
+            <div class="version-title">กรุณาเลือกรูปแบบการใช้งาน</div>
+            <div class="version-buttons">
+              <button type="button" class="btn-version" onclick="chooseVersion('Desktop')">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <span style="font-weight: bold;">Desktop</span>
+              </button>
+              <button type="button" class="btn-version" onclick="chooseVersion('Mobile')">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                <span style="font-weight: bold;">Mobile</span>
+              </button>
+            </div>
+          </div>
+          <div id="step-pin" class="step-container" style="display: none;">
+            <div class="label-container">
+              <label for="pin" id="pin-label">กรุณากรอกรหัสผ่าน</label>
+            </div>
+            <input type="password" id="pin" class="pin-input" maxlength="6" autocomplete="off">
+            <div id="numpad-container" class="numpad-grid" style="display:none;">
+              <button type="button" class="btn-num" onclick="pressNum('1')">1</button>
+              <button type="button" class="btn-num" onclick="pressNum('2')">2</button>
+              <button type="button" class="btn-num" onclick="pressNum('3')">3</button>
+              <button type="button" class="btn-num" onclick="pressNum('4')">4</button>
+              <button type="button" class="btn-num" onclick="pressNum('5')">5</button>
+              <button type="button" class="btn-num" onclick="pressNum('6')">6</button>
+              <button type="button" class="btn-num" onclick="pressNum('7')">7</button>
+              <button type="button" class="btn-num" onclick="pressNum('8')">8</button>
+              <button type="button" class="btn-num" onclick="pressNum('9')">9</button>
+              <button type="button" class="btn-num btn-num-action" onclick="pressNum('clear')">C</button>
+              <button type="button" class="btn-num" onclick="pressNum('0')">0</button>
+              <button type="button" class="btn-num btn-num-action" onclick="pressNum('back')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                    <line x1="18" y1="9" x2="12" y2="15"></line>
+                    <line x1="12" y1="9" x2="18" y2="15"></line>
+                  </svg></button>
+            </div>
+            <button type="button" id="login-submit" class="btn" onclick="handleLogin(event)">เข้าสู่ระบบ</button>
+            <button type="button" class="btn-back" onclick="backToChooseVersion()">← เปลี่ยนรูปแบบการใช้งาน</button>
+          </div>
+        </div>
+      </div> 
+    </div>  
+
+    <div id="view-desktop" class="view-section">
+      <?!= include('Desktop-Index');?>
+    </div>
+    <div id="view-mobile" class="view-section">
+      <?!= include('Mobile-Index');?>
+    </div>
+
+<!-------------------- JS Include -------------------->    
+  <?!= include('Common-JS'); ?>
+  <?!= include('Desktop-JS'); ?>
+    
+    <script>
+      let selectedVersion = 'Desktop';
+
+      window.addEventListener('load',function(){
+        setTimeout(function(){
+          document.body.classList.remove('first-load');
+        }, 1000);
+      });
+      document.getElementById('pin').addEventListener('keydown',function(e){
+        if(e.key==='Enter'){
+          e.preventDefault();
+          const submitBtn=document.getElementById('login-submit');
+          if(submitBtn&&!submitBtn.disabled){
+            submitBtn.click();
+          }
+        }
+      });
+/*==================== ฟังก์ชันสถานะล็อกอิน ====================*/
+      function updateLabel(text, color=''){
+        const label=document.getElementById('pin-label');
+        if(!label) return;
+        label.classList.remove('animate-swap');
+        void label.offsetWidth;
+        label.classList.add('animate-swap');
+
+        setTimeout(function(){
+          label.innerText=text;
+          label.style.color=color;
+        },120);
+      }
+/*==================== ฟังก์ชันเลือกเวอร์ชัน ====================*/
+      function chooseVersion(version) {
+        selectedVersion=version;
+        document.getElementById('step-version').style.display='none';
+        document.getElementById('step-pin').style.display='flex';
+        const pinInput=document.getElementById('pin');
+        const numpad=document.getElementById('numpad-container')
+        const submitBtn=document.getElementById('login-submit');
+        const label=document.getElementById('pin-label');
+        const logo=document.querySelector('.login-logo');
+          if(label){
+            label.innerText='กรุณากรอกรหัสผ่าน';
+            label.style.color='';
+          }
+          if(pinInput){
+            pinInput.value='';
+            pinInput.disabled=false;
+          }
+          if(submitBtn){
+            submitBtn.disabled=false;
+            submitBtn.style.opacity='1';
+          }
+        if(version==='Mobile'){
+          if(logo)logo.classList.add('is-mobile');
+          if(pinInput)pinInput.readOnly=true;
+          if(numpad)numpad.style.display='grid';
+          if(submitBtn)submitBtn.style.display='none';
+        }else{
+          if(logo)logo.classList.remove('is-mobile');
+          if(pinInput){
+            pinInput.readOnly=false;
+            pinInput.focus();
+          }
+          if(numpad)numpad.style.display='none';
+          if(submitBtn)submitBtn.style.display='block';
+        }
+      }
+/*==================== ฟังก์ชันกด numpad ====================*/
+      function pressNum(val){
+        const pinInput=document.getElementById('pin');
+        if(!pinInput||pinInput.disabled)return;
+        if(val==='clear'){
+          pinInput.value='';
+        }else if(val==='back'){
+          pinInput.value=pinInput.value.slice(0,-1);
+        }else {
+          if(pinInput.value.length<6){
+            pinInput.value+=val;
+            if(pinInput.value.length===6){
+              setTimeout(function(){
+                handleLogin();
+              },100);
+            }
+          }
+        }
+      }
+/*==================== ฟังก์ชันย้อนกลับไปเลือกเวอร์ชัน ====================*/
+      function backToChooseVersion() {
+        document.getElementById('step-pin').style.display='none';
+        document.getElementById('step-version').style.display='flex';
+        const pinInput=document.getElementById('pin');
+        const label=document.getElementById('pin-label');
+        const numpad=document.getElementById('numpad-container');
+        const logo=document.querySelector('.login-logo');
+        if(logo)logo.classList.remove('is-mobile');
+        if (pinInput) {
+          pinInput.value='';
+          pinInput.disabled=false;
+        }
+        if(label){
+          label.innerText='กรุณากรอกรหัสผ่าน';
+          label.style.color='';
+        }
+        if(numpad)numpad.style.display='none';
+      }
+/*==================== ฟังก์ชันส่งข้อมูลล็อกอิน ====================*/
+      function handleLogin(e) {
+        if(e) e.preventDefault();
+        
+        const pinInput = document.getElementById('pin');
+        const label = document.getElementById('pin-label');
+        const btn = document.getElementById('login-submit');
+        const pin = pinInput ? pinInput.value:'';
+        const version = selectedVersion;
+/*==================== ฟังก์ชันล้างช่องข้อมูล ====================*/
+        function resetForm(errorMessage) {
+          if (btn) {
+            btn.disabled = false;
+            btn.style.opacity ='1';
+          }
+          if(pinInput){
+            pinInput.disabled=false;
+            pinInput.value='';
+            if(version==='Desktop')pinInput.focus();
+          }
+          if (label) {
+            updateLabel(errorMessage, '#d32f2f');
+          }
+          if (pinInput) pinInput.value ='';
+        }
+        
+        if(pin.length !==6) {
+          updateLabel('กรุณากรอกรหัสผ่านให้ครบ', '#d32f2f');
+          return;
+        }
+        if(pinInput)pinInput.disabled=true;
+
+        if (label) {
+          updateLabel('กำลังตรวจสอบข้อมูล..', '');
+          label.style.color ='';
+        }
+        if (btn) {
+          btn.disabled = true;
+          btn.style.opacity = '0.6';
+        }
+/*==================== ฟังก์ชันนำทางเข้าระบบ ====================*/       
+        google.script.run
+          .withSuccessHandler(function(response) {
+            if(response.success) {
+              if(label){
+                updateLabel('กำลังเข้าสู่ระบบ..', '#2e7d32');
+              }
+            localStorage.setItem('isLoggedIn','true');
+            localStorage.setItem('userVersion',version);
+            setTimeout(function(){
+              document.getElementById('view-login').style.display='none';
+              if(version==='Mobile'){
+              document.getElementById('view-mobile').style.display='block';
+          }else{
+              document.getElementById('view-desktop').style.display='block';
+              }
+              resetSessionTimer();
+            },1500);
+          } else {
+              resetForm(response.message);
+            }
+          })
+          .withFailureHandler(function(err) {
+            resetForm('เกิดข้อผิดพลาดจากระบบ: '+(err.message || err));
+          })
+          .verifyLogin(pin, version);
+      }
+      const SESSION_TIMEOUT_MS=30*60*1000;
+      let sessionTimer=null
+
+      function resetSessionTimer() {
+        const loginView=document.getElementById('view-login');
+        if(loginView&&loginView.style.display!=='none') return;
+        localStorage.setItem('lastActivity',Date.now().toString());
+        if(sessionTimer)clearTimeout(sessionTimer);
+        sessionTimer=setTimeout(handleSessionTimeout, SESSION_TIMEOUT_MS);
+      }
+
+      function handleSessionTimeout() {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userVersion');
+        document.getElementById('view-desktop').style.display='none';
+        document.getElementById('view-mobile').style.display='none';
+        document.getElementById('view-login').style.display='block';
+        if(typeof backToChooseVersion==='function') {
+          backToChooseVersion();
+        }
+        document.getElementById('session-modal').style.display='flex';
+      }
+      function closeSessionModal() {
+        document.getElementById('session-modal').style.display='none';
+      }
+
+      function initSessionTracker() {
+        const activityEvents=['mousemove','keydown','click','touchstart','scroll'];
+        activityEvents.forEach(function(eventName) {
+          window.addEventListener(eventName,resetSessionTimer,{passive:true});
+        });
+      }
+      window.addEventListener('load',function() {
+        initSessionTracker();
+        const isLoggedIn=localStorage.getItem('isLoggedIn');
+        const userVersion=localStorage.getItem('userVersion');
+        const lastActivity=localStorage.getItem('lastActivity');
+        const now=Date.now();
+        if(isLoggedIn==='true'&&userVersion&&lastActivity&&(now-parseInt(lastActivity,10)<SESSION_TIMEOUT_MS)) {
+          selectedVersion=userVersion;
+          document.getElementById('view-login').style.display='none';
+        if(userVersion==='Mobile') {
+          document.getElementById('view-mobile').style.display='block';
+        }else{
+          document.getElementById('view-desktop').style.display='block';
+        }
+        resetSessionTimer();
+        }else{
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('userVersion');
+          localStorage.removeItem('lastActivity');
+        
+        }
+      });
+    </script>
+    <div id="session-modal" class="modal-backdrop" style="display:none;">
+      <div class="modal-card">
+        <div class="modal-title">ข้อความจากระบบ</div>
+        <div class="modal-body">ออกจากระบบอัตโนมัติเนื่องจากไม่มีการเคลื่อนไหวเกิน 30 นาที กรุณาเข้าสู่ระบบใหม่อีกครั้ง</div>
+        <button type="button" class="btn-modal" onclick="closeSessionModal()">ตกลง</button>
+      </div>
+    </div>
+    <script src="common.js"></script>
+    <script src="desktop.js"></script>
+  </body>
+</html>
